@@ -1,25 +1,33 @@
+$bg: black;
+$fg: #e9e7f8;
+$mid: #181820;
+
 @import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@300;400;900&display=swap");
 @font-face {
   font-family: "Wild World";
-  src: url("WildWorldBOLD.woff2") format("woff2"), url("WildWorldBOLD.woff") format("woff");
+  src: url("WildWorldBOLD.woff2") format("woff2"),
+    url("WildWorldBOLD.woff") format("woff");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
+
+$f: "Zen Kaku Gothic Antique";
+$f-decor: "Zen Kaku Gothic Antique";
+$f-decor: "Wild World";
 
 *,
 *::before,
 *::after {
   margin: 0;
   padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-  background-color: black;
-  color: #e9e7f8;
-  font-family: "Zen Kaku Gothic Antique";
+  background-color: $bg;
+  color: $fg;
+  font-family: $f;
 }
 
 .scroll-container {
@@ -31,9 +39,11 @@ body {
   will-change: transform;
 }
 
-.icon.small {
-  width: 2.5rem;
-  height: 2.5rem;
+.icon {
+  &.small {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }
 
 nav {
@@ -42,12 +52,8 @@ nav {
   top: 0;
   width: 100vw;
   height: 2rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
   padding: 1rem;
 }
 
@@ -57,16 +63,15 @@ section {
 
 .land__title {
   margin-top: 20vh;
-}
-
-.land__title p {
-  text-align: center;
-  margin-bottom: 3rem;
+  p {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
 }
 
 h1 {
   text-transform: uppercase;
-  font-family: "Wild World";
+  font-family: $f-decor;
   font-size: clamp(7vw, 3.5rem, 10rem);
   text-align: center;
 }
@@ -79,4 +84,3 @@ h1 {
   height: 100vh;
   z-index: 10;
 }
-/*# sourceMappingURL=globals.css.map */
