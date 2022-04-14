@@ -9,6 +9,7 @@ import { GLTF } from "three-stdlib";
 import { MeshPhysicalMaterial } from "three";
 import { useFrame } from "@react-three/fiber";
 import Math2 from "../../../utils/Math2";
+import Settings from "../../../utils/Settings";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -28,14 +29,20 @@ type TimelineIn = {
 
 type TimelineFunction = (
   i: TimelineIn
-) => [[number, number, number], [number, number, number], number];
+) => [[number, number, number], [number, number, number], number, () => void];
 
 export default function Ring({ ...props }: JSX.IntrinsicElements["group"]) {
   const group = useRef<THREE.Group>(null);
   const ref = useRef<THREE.Group>(null);
+  const lcd = useRef<THREE.Mesh>(null);
+  const prevS = useRef<number>(-1);
   const local = useRef<THREE.Group>(null);
-  const { nodes, materials } = useGLTF("/models/Ring.gltf") as GLTFResult;
-  const [call] = useTexture(["/screens/4Alert.png"]);
+  const { nodes } = useGLTF("/models/Ring.gltf") as GLTFResult;
+  const [call, alert, blank] = useTexture([
+    "/screens/1Call.png",
+    "/screens/4Alert.png",
+    "/screens/0Blank.png",
+  ]);
   const BaseMaterial = useMemo(() => {
     return new MeshPhysicalMaterial({
       color: "#000000",
@@ -52,20 +59,27 @@ export default function Ring({ ...props }: JSX.IntrinsicElements["group"]) {
       roughness: 0,
       metalness: 0,
       color: "#ffcece",
-      emissiveMap: call,
+      emissiveMap: alert,
     });
   }, []);
   useFrame(({ clock }) => {
     const scroll = scrollY / (document.body.scrollHeight - window.innerHeight);
-    if (!local.current) {
-      return null;
-    }
+
+    if (!local.current) return null;
     if (!ref.current) return null;
+    if (!lcd.current) return null;
+
     //TODO Play with precision
-    const sections = 2;
+    const sections = Settings.Sections;
     const et = clock.getElapsedTime();
-    const section = Math2.Clamp(Math.floor(scroll * sections), 0, 1);
-    const progress = Math2.Clamp(scroll * sections - section, 0, 1);
+    const section = Math2.Clamp(Math.floor(scroll * sections), 0, sections - 1);
+    const progress = Math2.Clamp(scroll * sections - section, 0, sections - 1);
+
+    const ChangeTexture = (t: THREE.Texture) => {
+      if (!lcd.current) return null;
+      if (!lcd.current.material) return null;
+      (lcd.current.material as THREE.MeshPhysicalMaterial).map = t;
+    };
 
     const timeline: TimelineFunction[] = [
       () => {
@@ -81,23 +95,59 @@ export default function Ring({ ...props }: JSX.IntrinsicElements["group"]) {
           Math2.Lerp(0, 0.3 + Math.PI * 2, progress),
         ];
         const rl = 0;
-        return [[x, y, z], [rx, ry, rz], rl];
+        return [
+          [x, y, z],
+          [rx, ry, rz],
+          rl,
+          () => {
+            ChangeTexture(blank);
+          },
+        ];
       },
       //? ALERT
       () => {
         const [x, y, z] = [0, Math.sin(et * 0.5) * 0.1, 1];
-        const [rx, ry, rz] = [0.2, 0.2, 0.3 + Math.PI * 2];
+        const [rx, ry, rz] = [0.2, 0.2 + progress * 0.2, 0.3 + Math.PI * 2];
         const rl = 0;
-        return [[x, y, z], [rx, ry, rz], rl];
+        return [
+          [x, y, z],
+          [rx, ry, rz],
+          rl,
+          () => {
+            ChangeTexture(alert);
+          },
+        ];
       },
       //? VIBRATIONS
+      () => {
+        const n = Math.sin(et * 30) * 0.01;
+        const [x, y, z] = [0, n, 1.5];
+        const [rx, ry, rz] = [
+          0.2 + progress * 0.2 + Math.sin(et * 20) * 0.1,
+          0.2,
+          -0.3 + Math.PI * 2,
+        ];
+        const rl = 0;
+        return [
+          [x, y, z],
+          [rx, ry, rz],
+          rl,
+          () => {
+            ChangeTexture(call);
+          },
+        ];
+      },
       //? GESTURES
       //? NFC
     ];
-    let [position, rotation, rotationLocal] = timeline[section]({
+    let [position, rotation, rotationLocal, StartTrigger] = timeline[section]({
       progress,
       et,
     });
+
+    if (prevS.current !== section) {
+      StartTrigger();
+    }
     const transitionSpeed = 0.1;
     //Animate using Math2.Lerp(a, b, t)
     const currentPos = [
@@ -111,8 +161,6 @@ export default function Ring({ ...props }: JSX.IntrinsicElements["group"]) {
       ref.current.rotation.z,
     ];
     // ref.current.position.set();
-    console.log(currentPos);
-    console.log();
 
     ref.current.position.set(
       Math2.Lerp(currentPos[0], position[0], transitionSpeed),
@@ -131,6 +179,7 @@ export default function Ring({ ...props }: JSX.IntrinsicElements["group"]) {
       Math2.Lerp(currentLocalRot, rotationLocal, transitionSpeed),
       0
     );
+    prevS.current = section;
   });
   return (
     <group ref={group} {...props} dispose={null}>
@@ -150,6 +199,7 @@ export default function Ring({ ...props }: JSX.IntrinsicElements["group"]) {
             geometry={nodes.RingDisplay.geometry}
             material={LCD}
             scale={1.08}
+            ref={lcd}
           />
         </group>
       </group>

@@ -5,17 +5,25 @@ import { Canvas } from "@react-three/fiber";
 import Ring from "../components/three/models/Ring";
 import { Suspense } from "react";
 import Skybox from "../components/three/Skybox";
-import {
-  Bloom,
-  EffectComposer,
-  HueSaturation,
-} from "@react-three/postprocessing";
-import LayoutPosition from "../components/three/LayoutPosition";
 import { sRGBEncoding, LinearEncoding, TextureEncoding } from "three";
-import { Loader } from "@react-three/drei";
 import dynamic from "next/dynamic";
+import useSection from "../state/useSection";
+import { useAnimationFrame } from "framer-motion";
+import Settings from "../utils/Settings";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const { setSection } = useSection();
+  useAnimationFrame(() => {
+    const scroll = scrollY / (document.body.scrollHeight - window.innerHeight);
+    const sections = Settings.Sections;
+    const section = Math.min(
+      Math.max(Math.floor(scroll * sections), 0),
+      sections - 1
+    );
+    console.log(section);
+    setSection(section);
+  });
+
   return (
     <>
       <Header></Header>
@@ -30,7 +38,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           }}
         >
           <Suspense fallback={null}>
-            {/* <ambientLight intensity={1} color="#ff0303"></ambientLight> */}
             <pointLight
               position={[0, 10, 20]}
               intensity={2}

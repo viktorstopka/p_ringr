@@ -79,4 +79,22 @@ h1 {
   height: 100vh;
   z-index: 10;
 }
+
+.menu {
+  position: fixed;
+  top: 20%;
+  left: 2%;
+  z-index: 100;
+}
+
+.menu .menu__link {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  cursor: pointer;
+  background-color: #0c0c12;
+  padding: 0.7rem 2rem;
+  text-align: center;
+  margin: 0.6rem;
+  border-radius: 10px;
+}
 /*# sourceMappingURL=globals.css.map */

@@ -1,6 +1,6 @@
 $bg: black;
 $fg: #e9e7f8;
-$mid: #181820;
+$mid: hsl(240, 20%, 6%);
 
 @import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@300;400;900&display=swap");
 @font-face {
@@ -83,4 +83,20 @@ h1 {
   width: 100vw;
   height: 100vh;
   z-index: 10;
+}
+
+.menu {
+  position: fixed;
+  top: 20%;
+  left: 2%;
+  z-index: 100;
+  .menu__link {
+    transform: scale(0);
+    cursor: pointer;
+    background-color: $mid;
+    padding: 0.7rem 2rem;
+    text-align: center;
+    margin: 0.6rem;
+    border-radius: 10px;
+  }
 }
