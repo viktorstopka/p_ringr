@@ -176,6 +176,7 @@ h1 {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  pointer-events: none;
 }
 
 .loader__icon {
