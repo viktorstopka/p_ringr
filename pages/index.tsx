@@ -1,9 +1,10 @@
-import { Loader } from "@react-three/drei";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import FinalCTA from "../components/FinalCTA";
 import Grain from "../components/Grain";
 import Header from "../components/Header";
+import Loader from "../components/Loader";
 import Parallax from "../components/Parallax";
 import SmoothScroll from "../components/SmoothScroll";
 import Menu from "../components/three/Menu";
@@ -18,6 +19,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Menu></Menu>
+      <FinalCTA></FinalCTA>
+      <Loader></Loader>
       <SmoothScroll>
         <section className="land">
           <div className="land__title">
@@ -25,8 +28,49 @@ const Home: NextPage = () => {
             <h1>Ringr.</h1>
           </div>
         </section>
-        <section></section>
-        <section></section>
+        <section>
+          <p className="block">
+            The Ringr is the perfect way to keep your life in order and under
+            your control.
+            <br />
+            <br />
+            With a sleek and sophisticated touch screen, the Ringr is perfect
+            for those who want to be able to access their life with a simple
+            touch.
+          </p>
+        </section>
+        <section>
+          <p className="block">
+            The Ringr also features haptics, which provide you with feedback
+            whenever you interact with the ring.
+            <br />
+            <br />
+            Whether you're touching the screen or using gestures, the haptics
+            will ensure that you always know what's going on.
+          </p>
+        </section>
+        <section>
+          <p className="block">
+            Ringr lets you create custom gestures or use the prebuilt ones.{" "}
+            <br />
+            <br />
+            With this feature, you can control your smart ring with a flick of
+            your wrist.
+          </p>
+        </section>
+        <section>
+          <p className="block">
+            The Ringr also supports NFC, meaning that you can use it to make
+            payments without ever having to take your phone out of your pocket.
+            <br />
+            <br />
+            Whether you're buying a coffee or paying for a taxi, the Ringr is
+            the smartest way to pay.
+          </p>
+        </section>
+        <section>
+          <div className="footer">Made by Viktor Stopka</div>
+        </section>
       </SmoothScroll>
     </div>
   );

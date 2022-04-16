@@ -2,7 +2,7 @@ import Icons from "./Icons";
 
 const Header: React.FC = () => {
   return (
-    <nav>
+    <nav className="flex">
       <Icons.Logo className="small"></Icons.Logo>
     </nav>
   );

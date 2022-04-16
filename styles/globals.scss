@@ -1,3 +1,5 @@
+@import "./def.scss";
+
 $bg: black;
 $fg: #e9e7f8;
 $mid: hsl(240, 20%, 6%);
@@ -46,19 +48,32 @@ body {
   }
 }
 
+.footer {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
 nav {
   position: fixed;
   left: 0;
   top: 0;
   width: 100vw;
-  height: 2rem;
+  height: 5rem;
   display: flex;
   justify-content: center;
   padding: 1rem;
+  align-items: center;
+}
+
+.ml {
+  margin-left: 2rem;
 }
 
 section {
   min-height: 100vh;
+  position: relative;
 }
 
 .land__title {
@@ -85,6 +100,17 @@ h1 {
   z-index: 10;
 }
 
+.block {
+  position: absolute;
+  right: 10vw;
+  bottom: 50vh;
+  transform: translate(0, -50%);
+  max-width: 30vw;
+  @include bind_max("main") {
+    max-width: 80vw;
+  }
+}
+
 .menu {
   position: fixed;
   top: 20%;
@@ -99,4 +125,42 @@ h1 {
     margin: 0.6rem;
     border-radius: 10px;
   }
+}
+
+.cta {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 100;
+  cursor: pointer;
+  text-decoration: none;
+  color: $fg;
+  background-color: #4706f8;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 900;
+  border-radius: 20px;
+  text-align: center;
+  padding: 1rem 5rem;
+}
+
+.loader {
+  background-color: $bg;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.loader__icon {
+  width: 100%;
+  height: 100%;
 }

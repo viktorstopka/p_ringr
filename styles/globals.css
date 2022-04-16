@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@300;400;900&display=swap");
+body > div,
+body > section,
+body > img {
+  overflow-x: hidden;
+}
+
 @font-face {
   font-family: "Wild World";
   src: url("WildWorldBOLD.woff2") format("woff2"), url("WildWorldBOLD.woff") format("woff");
@@ -36,12 +42,20 @@ body {
   height: 2.5rem;
 }
 
+.footer {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+}
+
 nav {
   position: fixed;
   left: 0;
   top: 0;
   width: 100vw;
-  height: 2rem;
+  height: 5rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -49,10 +63,18 @@ nav {
       -ms-flex-pack: center;
           justify-content: center;
   padding: 1rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.ml {
+  margin-left: 2rem;
 }
 
 section {
   min-height: 100vh;
+  position: relative;
 }
 
 .land__title {
@@ -80,6 +102,21 @@ h1 {
   z-index: 10;
 }
 
+.block {
+  position: absolute;
+  right: 10vw;
+  bottom: 50vh;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  max-width: 30vw;
+}
+
+@media (max-width: 1200px) {
+  .block {
+    max-width: 80vw;
+  }
+}
+
 .menu {
   position: fixed;
   top: 20%;
@@ -96,5 +133,53 @@ h1 {
   text-align: center;
   margin: 0.6rem;
   border-radius: 10px;
+}
+
+.cta {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+  z-index: 100;
+  cursor: pointer;
+  text-decoration: none;
+  color: #e9e7f8;
+  background-color: #4706f8;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 900;
+  border-radius: 20px;
+  text-align: center;
+  padding: 1rem 5rem;
+}
+
+.loader {
+  background-color: black;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.loader__icon {
+  width: 100%;
+  height: 100%;
 }
 /*# sourceMappingURL=globals.css.map */

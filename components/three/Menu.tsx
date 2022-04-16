@@ -85,7 +85,8 @@ const MenuLink: React.FC<MenuLinkProps> = ({ copy, section, active }) => {
         },
       }}
       animate={
-        active > Settings.ShowcaseSectionOffset - 1
+        active > Settings.ShowcaseSectionOffset - 1 &&
+        active < Settings.ShowcaseSectionCount + Settings.ShowcaseSectionOffset
           ? section === active
             ? "active"
             : "default"

@@ -38,10 +38,13 @@ export default function Ring({ ...props }: JSX.IntrinsicElements["group"]) {
   const prevS = useRef<number>(-1);
   const local = useRef<THREE.Group>(null);
   const { nodes } = useGLTF("/models/Ring.gltf") as GLTFResult;
-  const [call, alert, blank] = useTexture([
+  const [call, alert, blank, pay1, pay2, buy] = useTexture([
     "/screens/1Call.png",
     "/screens/4Alert.png",
     "/screens/0Blank.png",
+    "/screens/2Pay.png",
+    "/screens/3Pay.png",
+    "/screens/5Buy.png",
   ]);
   const BaseMaterial = useMemo(() => {
     return new MeshPhysicalMaterial({
@@ -62,7 +65,7 @@ export default function Ring({ ...props }: JSX.IntrinsicElements["group"]) {
       emissiveMap: alert,
     });
   }, []);
-  useFrame(({ clock }) => {
+  useFrame(({ clock, mouse, viewport }) => {
     const scroll = scrollY / (document.body.scrollHeight - window.innerHeight);
 
     if (!local.current) return null;
@@ -138,7 +141,69 @@ export default function Ring({ ...props }: JSX.IntrinsicElements["group"]) {
         ];
       },
       //? GESTURES
+      () => {
+        const [x, y, z] = [
+          (mouse.x * viewport.width) / 2,
+          (mouse.y * viewport.height) / 2,
+          0,
+        ];
+        const [rx, ry, rz] = [-Math.PI / 2, 0, Math.PI * 2];
+        const rl = 0;
+        return [[x, y, z], [rx, ry, rz], rl, () => {}];
+      },
       //? NFC
+      () => {
+        const [x, y, z] = [
+          0,
+          Math.sin(et * 0.5) * 0.05 + 0.1 - progress / 2,
+          1,
+        ];
+        const [rx, ry, rz] = [0.2, 0.2 + progress * 0.2, 0.3 + Math.PI * 2];
+        const rl = 0;
+        if (!lcd.current || !lcd.current.material) {
+          return [
+            [x, y, z],
+            [rx, ry, rz],
+            rl,
+            () => {
+              ChangeTexture(pay1);
+            },
+          ];
+        }
+        if (
+          progress > 0.6 &&
+          (lcd.current?.material as THREE.MeshPhysicalMaterial).map !== pay2
+        ) {
+          ChangeTexture(pay2);
+        }
+        return [
+          [x, y, z],
+          [rx, ry, rz],
+          rl,
+          () => {
+            ChangeTexture(pay1);
+          },
+        ];
+      },
+      //? BUY
+      () => {
+        const n = Math.sin(et * 0.5);
+        const [x, y, z] = [0, n * 0.1, 1 + progress];
+        const [rx, ry, rz] = [
+          0.2 + progress * Math.PI * 2,
+          (n + 0.5) * 0.2 + progress * 0.2,
+          0.3 + Math.PI * 2,
+        ];
+        const rl = 0;
+        return [
+          [x, y, z],
+          [rx, ry, rz],
+          rl,
+          () => {
+            ChangeTexture(buy);
+          },
+        ];
+      },
     ];
     let [position, rotation, rotationLocal, StartTrigger] = timeline[section]({
       progress,

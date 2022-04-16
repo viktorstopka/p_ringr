@@ -1,0 +1,34 @@
+body > div,
+body > section,
+body > img {
+  overflow-x: hidden;
+}
+
+$breakpoints: (
+  "main": 1200px,
+) !default;
+
+@mixin bind_min($breakpoint) {
+  @if map-has-key($breakpoints, $key: $breakpoint) {
+    @media (min-width: map-get($breakpoints, $key: $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Wrong breakpoint.";
+  }
+}
+@mixin bind_max($breakpoint) {
+  @if map-has-key($breakpoints, $key: $breakpoint) {
+    @media (max-width: map-get($breakpoints, $key: $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Wrong breakpoint.";
+  }
+}
+
+.pconly {
+  @include bind_max("small") {
+    display: none;
+  }
+}

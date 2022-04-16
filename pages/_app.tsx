@@ -3,13 +3,14 @@ import type { AppProps } from "next/app";
 import Header from "../components/Header";
 import { Canvas } from "@react-three/fiber";
 import Ring from "../components/three/models/Ring";
-import { Suspense } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import Skybox from "../components/three/Skybox";
 import { sRGBEncoding, LinearEncoding, TextureEncoding } from "three";
 import dynamic from "next/dynamic";
 import useSection from "../state/useSection";
 import { useAnimationFrame } from "framer-motion";
 import Settings from "../utils/Settings";
+import Confetti from "react-confetti";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { setSection } = useSection();
@@ -20,7 +21,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       Math.max(Math.floor(scroll * sections), 0),
       sections - 1
     );
-    console.log(section);
     setSection(section);
   });
 
