@@ -7,10 +7,11 @@ import {
   motion,
 } from "framer-motion";
 
-const SmoothScroll = ({ children, mobile = false }: any) => {
-  if (mobile) {
-    return children;
-  }
+const OutputMobile: React.FC<{ children: any }> = ({ children }) => {
+  return <>{children}</>;
+};
+
+const OutputPC: React.FC<{ children: any }> = ({ children }) => {
   // scroll container
   const scrollRef = useRef(null);
 
@@ -18,7 +19,7 @@ const SmoothScroll = ({ children, mobile = false }: any) => {
   const [pageHeight, setPageHeight] = useState(0);
 
   // update scrollable height when browser is resizing
-  const resizePageHeight = useCallback((entries) => {
+  const resizePageHeight = useCallback((entries: any) => {
     for (let entry of entries) {
       setPageHeight(entry.contentRect.height);
     }
@@ -55,6 +56,14 @@ const SmoothScroll = ({ children, mobile = false }: any) => {
       <div style={{ height: pageHeight }} />
     </>
   );
+};
+
+const SmoothScroll = ({ children, mobile = false }: any) => {
+  if (mobile) {
+    return <OutputMobile>{children}</OutputMobile>;
+  } else {
+    return <OutputPC>{children}</OutputPC>;
+  }
 };
 
 export default SmoothScroll;

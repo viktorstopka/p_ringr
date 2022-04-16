@@ -45,8 +45,8 @@ const Home: NextPage = () => {
             whenever you interact with the ring.
             <br />
             <br />
-            Whether you're touching the screen or using gestures, the haptics
-            will ensure that you always know what's going on.
+            Whether you&apos;re touching the screen or using gestures, the
+            haptics will ensure that you always know what&apos;s going on.
           </p>
         </section>
         <section>
@@ -64,8 +64,8 @@ const Home: NextPage = () => {
             payments without ever having to take your phone out of your pocket.
             <br />
             <br />
-            Whether you're buying a coffee or paying for a taxi, the Ringr is
-            the smartest way to pay.
+            Whether you&apos;re buying a coffee or paying for a taxi, the Ringr
+            is the smartest way to pay.
           </p>
         </section>
         <section>
