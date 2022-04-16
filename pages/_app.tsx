@@ -10,7 +10,6 @@ import dynamic from "next/dynamic";
 import useSection from "../state/useSection";
 import { useAnimationFrame } from "framer-motion";
 import Settings from "../utils/Settings";
-import Confetti from "react-confetti";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { setSection } = useSection();
