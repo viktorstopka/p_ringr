@@ -1,0 +1,6 @@
+body > div,
+body > section,
+body > img {
+  overflow-x: hidden;
+}
+/*# sourceMappingURL=def.css.map */

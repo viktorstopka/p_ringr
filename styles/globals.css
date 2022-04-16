@@ -7,7 +7,7 @@ body > img {
 
 @font-face {
   font-family: "Wild World";
-  src: url("WildWorldBOLD.woff2") format("woff2"), url("WildWorldBOLD.woff") format("woff");
+  src: url("/WildWorldBOLD.woff2") format("woff2"), url("/WildWorldBOLD.woff") format("woff");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
