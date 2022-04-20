@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>The Ringr.</title>
+        <title>The Ringr. - Unleash new possibilities</title>
         <meta
           property="og:title"
           content="The Ringr. - Unleash new possibilities"
